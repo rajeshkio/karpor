@@ -165,7 +165,7 @@ jobs:
           value: ${{ steps.get_version.outputs.VERSION }}
           branch: bump-karpor-to-${{ steps.get_version.outputs.VERSION }}
           targetBranch: test
-          createPR: false
+          createPR: true
           message: 'refactor: bump karpor version to ${{ steps.get_version.outputs.VERSION }}'
           token: ${{ secrets.GITHUB_TOKEN }}
           workDir: .
