@@ -148,7 +148,7 @@ jobs:
             echo "Error: Unable to fetch chart version" >&2
             exit 1
           fi
-          echo "Current chart version is: $version")
+          echo "Current chart version is: $version"
           major=$(echo "$version" | cut -d. -f1)
           minor=$(echo "$version" | cut -d. -f2)
           patch=$(echo "$version" | cut -d. -f3)
@@ -175,3 +175,4 @@ jobs:
           echo "Testing complete. Check the logs for details."
           echo "New chart version: ${{ steps.get_chart_version.outputs.new_chart_version }}"
           echo "App version: ${{ steps.get_version.outputs.VERSION }}"
+  
