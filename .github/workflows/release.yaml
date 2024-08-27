@@ -156,19 +156,26 @@ jobs:
           echo "New chart version is: $new_chart_version"
           echo "::set-output name=new_chart_version::$new_chart_version"
 
+      - name: Checkout Target repository
+        uses: actions/checkout@v3
+        with:
+          repository: KusionStack/charts 
+          path: charts 
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Bump version in the related HelmChart Chart.yaml
         uses: fjogeleit/yaml-update-action@main
         with:
           repository: KusionStack/charts
           valueFile: 'charts/karpor/Chart.yaml'
-          propertyPath: '{"version":"${{ steps.get-chart-version.outputs.new_chart_version }}", "appVersion":"${{ steps.get_version.outputs.VERSION }}"}'
+          propertyPath: '{"version":"${{ steps.get_chart_version.outputs.new_chart_version }}", "appVersion":"${{ steps.get_version.outputs.VERSION }}"}'
           value: ${{ steps.get_version.outputs.VERSION }}
           branch: bump-karpor-to-${{ steps.get_version.outputs.VERSION }}
           targetBranch: test
           createPR: true
           message: 'refactor: bump karpor version to ${{ steps.get_version.outputs.VERSION }}'
           token: ${{ secrets.GITHUB_TOKEN }}
-          workDir: .
+          workDir: charts
 
       - name: Log Test Outputs  # Log outputs for debugging
         run: |
